@@ -14,7 +14,9 @@ const readPosts = () => {
 };
 
 const populatePosts = () => {
-  // TODO: implement this
+  Post.create(readPosts()).then((post) => {
+    
+  }).catch()
 };
 
 module.exports = { readPosts, populatePosts };
