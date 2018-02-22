@@ -14,10 +14,16 @@ server.use(bodyParser.json());
 // TODO: write your route handlers here
 
 server.get('/accepted-answer/:soID', (req, res) => {
-  const { id } = req.params;
-  Post.find({ id })
+  const { soID } = req.params;
+  Post.findOne({soID})
   .then(id => {
-    res.send(id);
+    console.log(id);
+    const answerID = id.acceptedAnswerID;
+    console.log(answerID);
+    Post.findOne({ soID: answerID })
+    .then(acceptedID => {
+      res.send(acceptedID);
+    })
   }).catch(error => {
     res.status(500).send({ error });
   })
