@@ -6,7 +6,7 @@ mongoose.models = {};
 mongoose.modelSchemas = {};
 
 mongoose.Promise = Promise;
-mongoose.connect('mongodb://localhost/so-posts', { useMongoClient: true });
+mongoose.connect('mongodb://schroeder:pass@ds245548.mlab.com:45548/lsplay', { useMongoClient: true });
 
 const PostSchema = new mongoose.Schema({
   soID: {

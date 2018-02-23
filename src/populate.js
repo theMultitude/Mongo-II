@@ -6,7 +6,7 @@ mongoose.Promise = global.Promise;
 
 const Post = require('./post.js');
 
-mongoose.connect('mongodb://localhost/soPosts', { useMongoClient: true });
+mongoose.connect('mongodb://schroeder:pass@ds245548.mlab.com:45548/lsplay', { useMongoClient: true });
 
 const readPosts = () => {
   // cache posts after reading them once

@@ -65,7 +65,9 @@ server.get('/npm-answers', (req, res) => {
       items.forEach((thing) => {
         ids.push(thing.soID);
       });
-      Post.find({ parentID: ids }).sort({ parentID: -1, score: -1 }).then((answers) => {
+      Post.find({ parentID: ids })
+        .sort({ parentID: -1, score: -1 })
+        .then((answers) => {
         res.send(answers);
       });
     })
@@ -74,17 +76,17 @@ server.get('/npm-answers', (req, res) => {
     });
 });
 
-// mongoose.connect('mongodb://localhost/soPosts', { useMongoClient: true })
-//   .then(each => {
-//     const post = populatePosts();
-//     Post.create(post)
-//       .then(posts => {
-//         console.log('Posts were populated successfully on soPosts database.');
-//       }).catch(error => {
-//         console.log('Failed to populate the database');
-//       })
-//   }).catch(error => {
-//     console.log('Failed to connect to the database.');
-//   })
+mongoose.connect('mongodb://schroeder:pass@ds245548.mlab.com:45548/lsplay', { useMongoClient: true })
+  .then(each => {
+    const post = populatePosts();
+    Post.create(post)
+      .then(posts => {
+        console.log('Posts were populated successfully on soPosts database.');
+      }).catch(error => {
+        console.log('Failed to populate the database');
+      })
+  }).catch(error => {
+    console.log('Failed to connect to the database.');
+  })
 
 module.exports = { server };
