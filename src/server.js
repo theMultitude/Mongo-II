@@ -17,10 +17,8 @@ server.get('/accepted-answer/:soID', (req, res) => {
   const { soID } = req.params;
   Post.findOne({soID})
   .then(id => {
-    console.log(id);
-    const answerID = id.acceptedAnswerID;
-    console.log(answerID);
-    Post.findOne({ soID: answerID })
+    const acceptedID = id.acceptedAnswerID;
+    Post.findOne({ soID: acceptedID })
     .then(acceptedID => {
       res.send(acceptedID);
     })
@@ -28,6 +26,35 @@ server.get('/accepted-answer/:soID', (req, res) => {
     res.status(500).send({ error });
   })
 })
+
+server.get('/top-answer/:soID', (req, res) => {
+  const { soID } = req.params;
+  Post.findOne({soID})
+    .then(id => {
+      const acceptedID = id.acceptedAnswerID;
+      Post.find({parentID: soID}).sort({"score": -1})
+        .then(scores => {
+          if(scores[0].soID === acceptedID) {
+            res.send(scores[1]);
+          } else {
+            res.send(scores[0]);
+          }
+        })
+    }).catch(error => {
+      res.status(500).send({ error });
+    })
+})
+
+server.get('/popular-jquery-questions', (req, res) => {
+  Post.find({ "tags": "jquery" })
+    .or([{ "score": {$gt: 5000} }, { "user.reputation": {$gt: 200000} }])
+    .then(r => {
+      res.send(r);
+    }).catch(error => {
+      res.status(500).send({ error: "Could not find jquery questions." });
+    })
+})
+
 
 // mongoose.connect('mongodb://localhost/soPosts', { useMongoClient: true })
 //   .then(each => {
